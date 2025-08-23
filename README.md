@@ -41,5 +41,26 @@ This repository contains sample agents built using the Google ADK (Agentic Devel
    ```bash
    uv sync
    ```
-4. **Configure environment variables:**
-   - Copy `.env.example` to `.env` and fill in the required values (e.g., `GOOGLE_API_KEY`).
+4. **Configure environment variables:**  
+   Copy `.env.example` to `.env` and fill in the required values (e.g., `GOOGLE_API_KEY`).
+
+
+## Running the Agent
+
+1. **Navigate to one of the sample project**  
+   For instance, to run the `email_agent` agent, we checkout the `structured-output-schema` sample.
+   ```bash
+   cd structured-output-schema
+   ```
+
+2. **Run the agent project**  
+   
+   ```bash
+   # Launch in Dev UI mode:
+   adk web
+   ```
+   OR  
+   ```bash
+   # Chat with the agent in CLI mode:
+   adk run email_agent
+   ```
