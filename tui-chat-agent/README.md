@@ -27,22 +27,33 @@ things up.
 > returns HTTP 999, X wants a login), so direct scraping is a dead end. The snapshot
 > tools guarantee Bhalu always knows the basics, and Exa covers the fresh stuff.
 
-## Run it
+## Setup
 
-From the repo root, make sure dependencies are installed and your `.env` has a
-`GOOGLE_API_KEY`:
+You need two things (one required, one optional):
+
+| Key | Required? | Where to get it |
+| --- | --- | --- |
+| `GOOGLE_API_KEY` | ✅ Yes | [Google AI Studio](https://aistudio.google.com/apikey) — free tier works fine |
+| `EXA_API_KEY` | Optional | [exa.ai](https://dashboard.exa.ai/api-keys) — enables live web search; without it Bhalu falls back to his snapshots |
+
+From the repo root:
 
 ```bash
+# 1. Install dependencies (adds textual + httpx for this sample)
 uv sync
-cp .env.example .env  # then add your key
+
+# 2. Create your .env and paste the key(s) in
+cp .env.example .env
 ```
 
-Then:
+## Run it
 
 ```bash
 cd tui-chat-agent
 uv run tui.py
 ```
+
+Type at the bear. `Ctrl+C` quits.
 
 The classic runners work too:
 
