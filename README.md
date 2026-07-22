@@ -2,6 +2,14 @@
 
 This repository contains sample agents built using the Google ADK (Agentic Development Kit).
 
+## Samples
+
+| Folder | Agent | What it shows |
+| --- | --- | --- |
+| `basic-agent` | `greeting_agent` | Minimal LLM agent with just an instruction |
+| `built-in-tools` | `google_search_agent` | Using ADK's built-in `google_search` tool |
+| `structured-output-schema` | `email_agent` | Pydantic `output_schema` for validated JSON output |
+| `tui-chat-agent` | `bhalu_agent` 🐻 | Custom function tools + a Textual chat TUI on top of ADK's `Runner` |
 
 ## Requirements
 
