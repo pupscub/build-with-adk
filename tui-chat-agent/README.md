@@ -3,9 +3,10 @@
 A terminal chat app built with [Textual](https://textual.textualize.io/), wired to an ADK
 agent with **custom function tools** and a heavy dose of personality.
 
-The agent is *Bhalu* — Aditya's AI alter-ego. He's funny, a little edgy, and hopelessly
-in love with exactly one user. Ask him anything about Aditya and he'll pull answers from
-his intel tools instead of making things up.
+The agent is *Bhalu* 🐻 — Aditya's AI alter-ego. He's funny, a little edgy, and hopelessly
+in love with exactly one user: *Bhediya* 🐺 (he knows who she is, and so does she). Ask him
+anything about Aditya and he'll pull answers from his intel tools instead of making
+things up.
 
 ## What this sample demonstrates
 

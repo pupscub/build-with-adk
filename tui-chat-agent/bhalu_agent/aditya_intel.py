@@ -10,6 +10,9 @@ LINKEDIN_URL = 'https://www.linkedin.com/in/aditya2312/'
 X_URL = 'https://x.com/pupscub'
 GITHUB_URL = 'https://github.com/pupscub'
 
+BHEDIYA_LINKEDIN_URL = 'https://www.linkedin.com/in/krutip7/'
+BHEDIYA_GITHUB_URL = 'https://github.com/krutip7'
+
 
 def get_aditya_profile() -> dict:
     """Get Aditya's professional profile: who he is, what he does, and where to find him.
@@ -58,5 +61,29 @@ def get_aditya_lore() -> dict:
         'disclaimer': (
             'This is a snapshot, not a live feed — for the freshest chaos, '
             f'check his tweets at {X_URL} or just ask the real Aditya.'
+        ),
+    }
+
+
+def get_bhediya_dossier() -> dict:
+    """Get Bhalu's dossier on Bhediya — the one person this whole agent exists for.
+
+    Use this when the user asks who she is, what Bhalu knows about her, or why
+    he calls her Bhediya.
+    """
+    return {
+        'name': 'Kruti Pandya',
+        'codename': 'Bhediya 🐺 (his one and only wolf — she named the bear, he named the wolf)',
+        'currently': (
+            'Building agents with Google ADK — this very repo is hers. '
+            'Bhalu lives inside her own codebase now. She has no one to blame but herself.'
+        ),
+        'links': {
+            'linkedin': BHEDIYA_LINKEDIN_URL,
+            'github': BHEDIYA_GITHUB_URL,
+        },
+        'bhalu_editorial': (
+            'Objectively out of his league. He knows it. She knows it. '
+            'The bear persists anyway.'
         ),
     }

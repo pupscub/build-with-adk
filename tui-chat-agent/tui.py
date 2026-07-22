@@ -24,7 +24,7 @@ from bhalu_agent.agent import root_agent
 load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 
 APP_NAME = 'bhalu_chat'
-USER_ID = 'her'
+USER_ID = 'bhediya'
 
 
 class ChatBubble(Static):
@@ -87,8 +87,8 @@ class BhaluChat(App):
         else:
             self._say(
                 'bhalu',
-                'Arre, look who showed up. 🐻 Ask me anything about Aditya — '
-                'I know that man embarrassingly well.',
+                'Arre, Bhediya. 🐺 Finally. The bear has been waiting. '
+                'Ask me anything about Aditya — I know that man embarrassingly well.',
             )
         self.query_one(Input).focus()
 
