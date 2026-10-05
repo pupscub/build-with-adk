@@ -9,14 +9,14 @@ export const colors = {
   sage: '#B3C9A0', rose: '#D99A8C',
 };
 const starters = [
-  { label: 'Meet Bhalu', prompt: 'Who is Bhalu? Tell me about Aditya.' },
-  { label: 'Meet Bhediya', prompt: 'Tell me about Bhediya. Who is Kruti?' },
-  { label: 'A gentle roast', prompt: 'Give me a gentle roast of Aditya.' },
+  { label: 'Meet Bhalu', prompt: 'Who is Bhalu? Tell me about the bear.' },
+  { label: 'Meet Bhediya', prompt: 'Tell me about Bhediya. Who is the wolf?' },
+  { label: 'A gentle roast', prompt: 'Give me a gentle roast of Bhalu.' },
   { label: 'Their story', prompt: 'Tell me about both Bhalu and Bhediya.' },
 ];
 const tools: Record<string, string> = {
-  get_aditya_profile: "Bhalu's field notes",
-  get_aditya_lore: 'The lore archive',
+  get_bhalu_profile: "Bhalu's field notes",
+  get_bhalu_lore: 'The lore archive',
   get_bhediya_dossier: "Bhediya's field notes",
   search_web: 'Searching the web',
 };
@@ -53,12 +53,12 @@ function Cast({ demo, search }: { demo: boolean; search: boolean }) {
     <text fg={colors.dim} marginBottom={1}>THE CAST</text>
     <text fg={colors.amber}>{'  ()___()\n  ( o.o )'}</text>
     <text fg={colors.amber} marginTop={1}><b>BHALU</b></text>
-    <text fg={colors.ink}>Aditya Singh</text>
+    <text fg={colors.ink}>The bear</text>
     <text fg={colors.muted} marginTop={1}>{'Builder. Professional\noverthinker. Your\nresident bear.'}</text>
     <text fg={colors.line} marginTop={1} marginBottom={1}>────────────────────</text>
     <text fg={colors.sage}>{'   /\\_/\\\n  ( o.o )'}</text>
     <text fg={colors.sage} marginTop={1}><b>BHEDIYA</b></text>
-    <text fg={colors.ink}>Kruti Pandya</text>
+    <text fg={colors.ink}>The wolf</text>
     <text fg={colors.muted} marginTop={1}>{'Agent builder. The wolf.\nThe reason the bear\nhas this much lore.'}</text>
     <box flexGrow={1} />
     <text fg={colors.dim} marginBottom={1}>IN THE BACKPACK</text>
@@ -114,7 +114,7 @@ export function App({ chat, onQuit }: { chat: ChatController; onQuit: () => void
               <text fg={colors.sage}>{'   /\\_/\\\n  ( o.o )'}</text>
             </box>}
             <text fg={colors.ink} marginTop={compact ? 0 : 1}><b>A bear. A wolf. A little bit of lore.</b></text>
-            <text fg={colors.muted} marginTop={1} wrapMode="word">Pull up a chair. Ask about Aditya, get to know Kruti, or let the bear embarrass himself.</text>
+            <text fg={colors.muted} marginTop={1} wrapMode="word">Pull up a chair. Ask about Bhalu, get to know Bhediya, or let the bear embarrass himself.</text>
             <text fg={colors.dim} marginTop={compact ? 1 : 2} marginBottom={1}>WHERE SHALL WE START?</text>
             <box flexDirection={width < 50 ? 'column' : 'row'} gap={1}>
               {starters.slice(0, 2).map((item, index) => <box key={item.label} flexGrow={1} flexBasis={width < 50 ? 'auto' : 0} border borderStyle="rounded" borderColor={colors.line} paddingLeft={1} paddingRight={1} onMouseDown={() => fill(index)}>

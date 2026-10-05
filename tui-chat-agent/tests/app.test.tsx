@@ -16,17 +16,18 @@ test('wide layout renders the cast and starter keys fill and submit the composer
     expect(initial).toContain('THE CAST');
     expect(initial).toContain('DEMO');
     expect(initial).toContain('YOUR TURN');
+    expect(initial).not.toMatch(/aditya|kruti|kurti|singh|pandya/i);
     await act(async () => { view.mockInput.pressKey('F3'); });
     await view.renderOnce();
-    expect(view.captureCharFrame()).toContain('Who is Kruti?');
+    expect(view.captureCharFrame()).toContain('Who is the wolf?');
     await act(async () => { view.mockInput.pressEnter(); });
-    expect(requests[0]).toMatchObject({ type: 'chat', text: 'Tell me about Bhediya. Who is Kruti?' });
+    expect(requests[0]).toMatchObject({ type: 'chat', text: 'Tell me about Bhediya. Who is the wolf?' });
     await act(async () => {
       chat.receive({ type: 'tool', id: '1', name: 'get_bhediya_dossier' });
-      chat.receive({ type: 'delta', id: '1', text: 'Meet Kruti, the wolf.' });
+      chat.receive({ type: 'delta', id: '1', text: 'Meet Bhediya, the wolf.' });
     });
     await view.renderOnce();
-    expect(view.captureCharFrame()).toContain('Meet Kruti, the wolf.');
+    expect(view.captureCharFrame()).toContain('Meet Bhediya, the wolf.');
     expect(view.captureCharFrame()).toContain("Bhediya's field notes");
     await act(async () => { await view.mockInput.typeText('next question'); view.mockInput.pressEnter(); });
     await view.renderOnce();

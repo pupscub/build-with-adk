@@ -5,10 +5,18 @@ A cozy terminal chat about a bear, a wolf, and their lore. Built with
 
 ![The Den, captured from the OpenTUI renderer](docs/preview-120.svg)
 
-**Bhalu** is Aditya's AI alter-ego: a builder, an enthusiastic self-roaster, and a
-bear with a soft spot for **Bhediya**, Kruti Pandya. Anyone can pull up a chair and
+**Bhalu** is the resident bear: a builder, an enthusiastic self-roaster, and a
+bear with a soft spot for **Bhediya**, the wolf. Anyone can pull up a chair and
 ask about either of them. The agent uses curated tools for facts and optional Exa
 search for fresh information.
+
+The characters use only **Bhalu** and **Bhediya**. Their real names and personal
+profile links are absent from the character notes and interface. The agent is
+instructed not to reveal or confirm real identities, and a shared ADK output
+filter replaces known names before replies reach any frontend, including names
+split across streamed chunks. Search titles and excerpts use the same filter;
+identifying URLs are omitted. Generated tool arguments are filtered before ADK
+executes or records them.
 
 ## Try it
 
@@ -71,8 +79,8 @@ LinkedIn profile or X post.
 
 ```text
 OpenTUI + React  ← JSON lines →  bridge.py  →  ADK Runner
-                                              ├─ get_aditya_profile
-                                              ├─ get_aditya_lore
+                                              ├─ get_bhalu_profile
+                                              ├─ get_bhalu_lore
                                               ├─ get_bhediya_dossier
                                               └─ search_web (async HTTPX → Exa)
 ```
@@ -106,9 +114,10 @@ bun test
 
 Tests cover native OpenTUI rendering, keyboard controls, narrow layouts, paste,
 scrolling, stream state, the real Python subprocess, Exa errors, and ADK history
-after cancelling a tool call. All automated tests are offline; live model quality
-and API credentials require a manual check. GitHub Actions runs the suite on
-Python 3.10 and 3.13.
+after cancelling a tool call. Privacy checks cover names in streamed replies,
+Markdown, tool arguments, and search results. All automated tests are offline;
+live model quality and API credentials require a manual check. GitHub Actions
+runs the suite on Python 3.10 and 3.13.
 
 Regenerate the renderer-captured previews with `bun run preview` and
 `bun run preview 60 24`. [Compact preview](docs/preview-60.svg).

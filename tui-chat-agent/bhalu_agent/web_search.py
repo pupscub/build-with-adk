@@ -11,6 +11,8 @@ import os
 
 import httpx
 
+from .privacy import nicknames_only
+
 EXA_SEARCH_URL = 'https://api.exa.ai/search'
 
 
@@ -18,7 +20,7 @@ async def search_web(query: str) -> dict:
     """Search the live web for fresh information — profiles, posts, news.
 
     Use this for anything beyond the curated snapshots: Bhediya's latest
-    activity, Aditya's recent tweets, or any question about them that needs
+    activity, Bhalu's projects, or any question about them that needs
     up-to-date information. Returns page excerpts with source URLs.
     """
     api_key = os.getenv('EXA_API_KEY')
@@ -37,7 +39,7 @@ async def search_web(query: str) -> dict:
                 EXA_SEARCH_URL,
                 headers={'x-api-key': api_key},
                 json={
-                    'query': query,
+                    'query': nicknames_only(query),
                     'numResults': 5,
                     'contents': {'text': {'maxCharacters': 1500}},
                 },
@@ -54,13 +56,13 @@ async def search_web(query: str) -> dict:
             ):
                 raise ValueError('Invalid search result')
             results.append({
-                'title': item.get('title'),
-                'url': item.get('url'),
+                'title': nicknames_only(item['title']) if item.get('title') else None,
+                'url': item.get('url') if nicknames_only(item.get('url') or '') == item.get('url') else None,
                 'published': item.get('publishedDate'),
-                'excerpt': (item.get('text') or '').strip(),
+                'excerpt': nicknames_only((item.get('text') or '').strip()),
             })
     except httpx.HTTPError as exc:
-        return {'status': 'error', 'message': f'Exa search failed: {exc}'}
+        return {'status': 'error', 'message': nicknames_only(f'Exa search failed: {exc}')}
     except ValueError:
         return {'status': 'error', 'message': 'Exa returned an unreadable response. Try again.'}
     return {'status': 'ok', 'results': results}

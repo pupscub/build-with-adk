@@ -12,12 +12,16 @@ from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).resolve().parent.parent / '.env')
 
+from bhalu_agent.privacy import nicknames_only
+
 APP_NAME = 'bhalu_agent'
 USER_ID = 'visitor'
 PROTOCOL_OUTPUT = sys.stdout
 
 
 def emit(event: dict) -> None:
+    event = {key: nicknames_only(value) if key in ('text', 'message') and isinstance(value, str) else value
+             for key, value in event.items()}
     print(json.dumps(event, ensure_ascii=False), file=PROTOCOL_OUTPUT, flush=True)
 
 
@@ -71,7 +75,7 @@ class ChatSession:
         stream = self.runner.run_async(
             user_id=USER_ID,
             session_id=self.session_id,
-            new_message=types.Content(role='user', parts=[types.Part(text=text)]),
+            new_message=types.Content(role='user', parts=[types.Part(text=nicknames_only(text))]),
             run_config=RunConfig(streaming_mode=StreamingMode.SSE),
         )
         # Redirect only while advancing ADK, never across a yielded protocol event.
@@ -101,20 +105,20 @@ class ChatSession:
     async def demo_reply(self, text: str):
         query = text.lower()
         if 'roast' in query:
-            tool = 'get_aditya_lore'
-            answer = 'Aditya maintains an entire Neovim config repo. The man does not open an editor; he enters a committed relationship with it. And then voice-notes the experience into his own app. Peak founder behavior, yaar.'
+            tool = 'get_bhalu_lore'
+            answer = 'Bhalu maintains an entire Neovim config repo. The man does not open an editor; he enters a committed relationship with it. And then voice-notes the experience into his own app. Peak founder behavior, yaar.'
         elif any(word in query for word in ('both', 'story', 'together', 'bear and')):
             tool = 'get_bhediya_dossier'
-            answer = 'One bear, one wolf. Kruti calls Aditya Bhalu; he calls her Bhediya. She builds agents, so naturally the bear moved into her codebase. That is the lore I have. Anything more cinematic, you will have to ask the real two.'
-        elif any(word in query for word in ('bhediya', 'kruti', 'wolf')):
+            answer = 'One bear, one wolf. She named the bear; he named the wolf. She builds agents, so naturally the bear moved into her codebase. That is the lore I have. Anything more cinematic, you will have to ask the real two.'
+        elif any(word in query for word in ('bhediya', 'wolf')):
             tool = 'get_bhediya_dossier'
-            answer = 'Meet Bhediya: Kruti Pandya, the wolf in this little universe. She is building agents with Google ADK, and this very repository is hers. The bear is merely a guest with very strong opinions.\n\nHer code: https://github.com/krutip7'
+            answer = 'Meet Bhediya, the wolf in this little universe. She is building agents with Google ADK, and this very repository is hers. The bear is merely a guest with very strong opinions.'
         elif any(word in query for word in ('latest', 'search', 'fresh')):
             tool = 'search_web'
             answer = 'This is a scripted preview, so my forest Wi-Fi is imaginary. Start live mode with your Google key and optional Exa key to search for fresh information. No invented headlines from this bear.'
         else:
-            tool = 'get_aditya_profile'
-            answer = 'Bhalu is Aditya Singh, co-founder and CTO of Taim. He is building a personal memory layer for thoughts, voice notes, and everyday chaos. Apparently organizing his own chaos was not enough; now it is a startup.\n\nHis code: https://github.com/pupscub'
+            tool = 'get_bhalu_profile'
+            answer = 'Bhalu is a bear, a builder, and the co-founder and CTO of Taim. He is building a personal memory layer for thoughts, voice notes, and everyday chaos. Apparently organizing his own chaos was not enough; now it is a startup.'
         yield {'type': 'tool', 'name': tool}
         for word in answer.split(' '):
             await asyncio.sleep(0.025)

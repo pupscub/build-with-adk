@@ -13,13 +13,13 @@ test('streaming preserves one turn, tools, and canonical final text', () => {
   expect(chat.send('  Meet Bhalu  ')).toBe(true);
   expect(chat.send('Second message')).toBe(false);
   expect(requests).toEqual([{ type: 'chat', id: '1', text: 'Meet Bhalu' }]);
-  chat.receive({ type: 'tool', id: '1', name: 'get_aditya_profile' });
+  chat.receive({ type: 'tool', id: '1', name: 'get_bhalu_profile' });
   chat.receive({ type: 'delta', id: '1', text: 'Hello ' });
   chat.receive({ type: 'delta', id: '1', text: 'there' });
   expect(chat.getSnapshot().messages[1]!.text).toBe('Hello there');
   chat.receive({ type: 'text', id: '1', text: 'Hello there!' });
   chat.receive({ type: 'done', id: '1' });
-  expect(chat.getSnapshot().messages[1]).toMatchObject({ text: 'Hello there!', tools: ['get_aditya_profile'], state: 'done' });
+  expect(chat.getSnapshot().messages[1]).toMatchObject({ text: 'Hello there!', tools: ['get_bhalu_profile'], state: 'done' });
   expect(chat.getSnapshot().busy).toBe(false);
 });
 
@@ -80,7 +80,7 @@ test('the real Python bridge handles a demo reply, cancellation and reset', asyn
     expect(chat.getSnapshot().connection).toBe('ready');
     chat.send('Meet Bhediya');
     await waitFor(() => !chat.getSnapshot().busy);
-    expect(chat.getSnapshot().messages.at(-1)!.text).toContain('Kruti Pandya');
+    expect(chat.getSnapshot().messages.at(-1)!.text).toContain('Bhediya');
     chat.send('roast');
     await waitFor(() => !!chat.getSnapshot().messages.at(-1)!.text);
     chat.cancel();

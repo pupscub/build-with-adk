@@ -1,28 +1,14 @@
-"""Curated intel about Aditya, served as ADK function tools.
-
-LinkedIn and X both block anonymous scraping (LinkedIn answers with HTTP 999,
-X with a login wall), so instead of fetching live these tools return a curated
-snapshot of his public profiles. The source URLs are included so the agent can
-always point people at the real thing.
-"""
-
-LINKEDIN_URL = 'https://www.linkedin.com/in/aditya2312/'
-X_URL = 'https://x.com/pupscub'
-GITHUB_URL = 'https://github.com/pupscub'
-
-BHEDIYA_LINKEDIN_URL = 'https://www.linkedin.com/in/krutip7/'
-BHEDIYA_GITHUB_URL = 'https://github.com/krutip7'
+"""Curated, nickname-only character notes served as ADK function tools."""
 
 
-def get_aditya_profile() -> dict:
-    """Get Aditya's professional profile: who he is, what he does, and where to find him.
+def get_bhalu_profile() -> dict:
+    """Get Bhalu's professional profile: who he is and what he does.
 
-    Use this whenever the user asks anything factual about Aditya — his work,
-    his startup, his background, or his links.
+    Use this whenever the user asks anything factual about Bhalu — his work,
+    his startup, or his background. Use only his nickname.
     """
     return {
-        'name': 'Aditya Singh',
-        'also_answers_to': 'Bhalu (usage rights restricted to exactly one person)',
+        'name': 'Bhalu',
         'location': 'San Francisco',
         'role': 'Co-founder & CTO @ TAIM Inc',
         'what_he_is_building': (
@@ -35,16 +21,11 @@ def get_aditya_profile() -> dict:
             'self-supervised transformers for audio, and an unreasonable number '
             'of side projects (43 public repos and counting).'
         ),
-        'links': {
-            'linkedin': LINKEDIN_URL,
-            'x_twitter': X_URL,
-            'github': GITHUB_URL,
-        },
     }
 
 
-def get_aditya_lore() -> dict:
-    """Get the fun, unserious lore about Aditya — hobbies, quirks, and roastable material.
+def get_bhalu_lore() -> dict:
+    """Get the fun, unserious lore about Bhalu — hobbies, quirks, and roastable material.
 
     Use this when the conversation is casual, when the user wants gossip,
     or when a joke needs ammunition.
@@ -55,12 +36,11 @@ def get_aditya_lore() -> dict:
             'Maintains a whole Neovim config repo. He does not simply *use* an editor, he curates it.',
             'On a self-assigned mission to rank every Chinese, Italian, and Indian restaurant in San Francisco.',
             'Voice-notes his entire life into his own app. Peak founder behavior: being your own power user.',
-            "His GitHub handle is 'pupscub'. Pup. Cub. The bear nickname was honestly inevitable.",
             'Ships everything with uv and has strong opinions about Python tooling.',
         ],
         'disclaimer': (
             'This is a snapshot, not a live feed — for the freshest chaos, '
-            f'check his tweets at {X_URL} or just ask the real Aditya.'
+            'ask Bhalu himself.'
         ),
     }
 
@@ -72,16 +52,12 @@ def get_bhediya_dossier() -> dict:
     he calls her Bhediya.
     """
     return {
-        'name': 'Kruti Pandya',
+        'name': 'Bhediya',
         'codename': 'Bhediya 🐺 (his one and only wolf — she named the bear, he named the wolf)',
         'currently': (
             'Building agents with Google ADK — this very repo is hers. '
             'Bhalu lives inside her own codebase now. She has no one to blame but herself.'
         ),
-        'links': {
-            'linkedin': BHEDIYA_LINKEDIN_URL,
-            'github': BHEDIYA_GITHUB_URL,
-        },
         'bhalu_editorial': (
             'Objectively out of his league. He knows it. She knows it. '
             'The bear persists anyway.'
