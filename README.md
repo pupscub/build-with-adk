@@ -9,7 +9,7 @@ This repository contains sample agents built using the Google ADK (Agentic Devel
 | `basic-agent` | `greeting_agent` | Minimal LLM agent with just an instruction |
 | `built-in-tools` | `google_search_agent` | Using ADK's built-in `google_search` tool |
 | `structured-output-schema` | `email_agent` | Pydantic `output_schema` for validated JSON output |
-| `tui-chat-agent` | `bhalu_agent` 🐻 | Custom function tools + a Textual chat TUI on top of ADK's `Runner` |
+| [`tui-chat-agent`](tui-chat-agent/) | `bhalu_agent` 🐻 | The Den: an OpenTUI chat about Bhalu & Bhediya, backed by ADK custom tools |
 
 ## Requirements
 
@@ -54,6 +54,10 @@ This repository contains sample agents built using the Google ADK (Agentic Devel
 
 
 ## Running the Agent
+
+For **The Den**, follow the [OpenTUI sample setup](tui-chat-agent/README.md).
+It uses Bun for the terminal interface and Python for the ADK agent. A scripted
+demo runs without API keys.
 
 1. **Navigate to one of the sample project**  
    For instance, to run the `email_agent` agent, we checkout the `structured-output-schema` sample.

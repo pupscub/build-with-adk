@@ -11,3 +11,6 @@ wheels/
 
 #other
 .env
+
+# OpenTUI frontend
+node_modules/

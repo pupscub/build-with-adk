@@ -1,0 +1,23 @@
+{
+  "name": "bhalu-and-bhediya",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.3.11",
+  "scripts": {
+    "start": "bun src/index.tsx",
+    "demo": "bun src/index.tsx --demo",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "preview": "bun scripts/preview.tsx"
+  },
+  "dependencies": {
+    "@opentui/core": "0.5.14",
+    "@opentui/react": "0.5.14",
+    "react": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.11",
+    "@types/react": "^19.2.0",
+    "typescript": "^5.9.3"
+  }
+}
