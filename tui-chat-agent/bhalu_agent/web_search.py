@@ -1,10 +1,7 @@
 """Live web search via Exa (exa.ai), exposed as an ADK function tool.
 
-Exa serves crawled page content through an API, which neatly sidesteps the
-problem that LinkedIn and X block anonymous scraping. It also demonstrates an
-ADK gotcha: the built-in google_search tool cannot be combined with custom
-function tools on the same agent, but a search API wrapped in a plain function
-composes with anything.
+Exa returns indexed page content where available. Wrapping a search API as a
+function tool lets it compose with the agent's curated profile tools.
 
 Needs EXA_API_KEY in the environment (see .env.example). Without it the tool
 degrades gracefully and the agent falls back to its curated snapshots.
@@ -17,7 +14,7 @@ import httpx
 EXA_SEARCH_URL = 'https://api.exa.ai/search'
 
 
-def search_web(query: str) -> dict:
+async def search_web(query: str) -> dict:
     """Search the live web for fresh information — profiles, posts, news.
 
     Use this for anything beyond the curated snapshots: Bhediya's latest
@@ -35,28 +32,35 @@ def search_web(query: str) -> dict:
             ),
         }
     try:
-        response = httpx.post(
-            EXA_SEARCH_URL,
-            headers={'x-api-key': api_key},
-            json={
-                'query': query,
-                'numResults': 5,
-                'contents': {'text': {'maxCharacters': 1500}},
-            },
-            timeout=30,
-        )
+        async with httpx.AsyncClient(timeout=30) as client:
+            response = await client.post(
+                EXA_SEARCH_URL,
+                headers={'x-api-key': api_key},
+                json={
+                    'query': query,
+                    'numResults': 5,
+                    'contents': {'text': {'maxCharacters': 1500}},
+                },
+            )
         response.raise_for_status()
-    except httpx.HTTPError as exc:
-        return {'status': 'error', 'message': f'Exa search failed: {exc}'}
-    return {
-        'status': 'ok',
-        'results': [
-            {
+        payload = response.json()
+        if not isinstance(payload, dict) or not isinstance(payload.get('results'), list):
+            raise ValueError('Expected search results')
+        results = []
+        for item in payload['results']:
+            if not isinstance(item, dict) or any(
+                item.get(key) is not None and not isinstance(item[key], str)
+                for key in ('title', 'url', 'publishedDate', 'text')
+            ):
+                raise ValueError('Invalid search result')
+            results.append({
                 'title': item.get('title'),
                 'url': item.get('url'),
                 'published': item.get('publishedDate'),
                 'excerpt': (item.get('text') or '').strip(),
-            }
-            for item in response.json().get('results', [])
-        ],
-    }
+            })
+    except httpx.HTTPError as exc:
+        return {'status': 'error', 'message': f'Exa search failed: {exc}'}
+    except ValueError:
+        return {'status': 'error', 'message': 'Exa returned an unreadable response. Try again.'}
+    return {'status': 'ok', 'results': results}
