@@ -14,7 +14,7 @@ This repository contains sample agents built using the Google ADK (Agentic Devel
 ## Requirements
 
 - Python 3.10 or higher (see `.python-version` for the recommended version)
-- [google-adk](https://pypi.org/project/google-adk/) >= 1.1.1
+- [google-adk](https://pypi.org/project/google-adk/) >= 1.39.1, < 2 (locked for Gemini streaming and tool-call support)
 - [python-dotenv](https://pypi.org/project/python-dotenv/) >= 1.1.0
 
 ## Setup

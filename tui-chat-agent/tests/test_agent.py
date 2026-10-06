@@ -11,6 +11,7 @@ from unittest.mock import patch
 import httpx
 from google.adk.models.base_llm import BaseLlm
 from google.adk.models.llm_response import LlmResponse
+from google.genai.models import AsyncModels
 from google.genai import types
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -115,6 +116,44 @@ class SearchTests(unittest.IsolatedAsyncioTestCase):
 
 
 class AgentTests(unittest.IsolatedAsyncioTestCase):
+    async def test_gemini_stream_continues_after_tool_call_and_empty_terminal_chunk(self):
+        requests = []
+
+        async def generate_content_stream(_client, *, model, contents, config):
+            requests.append([content.model_copy(deep=True) for content in contents])
+
+            async def chunks():
+                if len(requests) == 1:
+                    yield types.GenerateContentResponse(candidates=[types.Candidate(
+                        content=types.Content(role='model', parts=[types.Part(
+                            function_call=types.FunctionCall(name='get_bhalu_profile', args={}),
+                            thought_signature=b'opaque-test-signature',
+                        )]),
+                    )])
+                    # Gemini can end a tool-call stream with an empty text part.
+                    # It must not be mistaken for a completed assistant answer.
+                    yield types.GenerateContentResponse(candidates=[types.Candidate(
+                        content=types.Content(role='model', parts=[types.Part(text='')]),
+                        finish_reason=types.FinishReason.STOP,
+                    )])
+                else:
+                    yield types.GenerateContentResponse(candidates=[types.Candidate(
+                        content=types.Content(role='model', parts=[types.Part(text='Bhalu builds Taim.')]),
+                        finish_reason=types.FinishReason.STOP,
+                    )])
+
+            return chunks()
+
+        with patch.dict(os.environ, {'GOOGLE_API_KEY': 'test-google-key', 'GOOGLE_GENAI_USE_VERTEXAI': 'FALSE'}), patch.object(AsyncModels, 'generate_content_stream', generate_content_stream):
+            session = ChatSession()
+            await session.reset()
+            events = [event async for event in session.reply('What is Bhalu building?')]
+            self.assertEqual(events[-1], {'type': 'text', 'text': 'Bhalu builds Taim.'})
+            self.assertEqual(len(requests), 2)
+            parts = [part for content in requests[1] for part in content.parts]
+            self.assertTrue(any(part.function_response for part in parts))
+            self.assertTrue(any(part.thought_signature == b'opaque-test-signature' for part in parts))
+
     async def test_real_runner_filters_tool_arguments_before_execution_and_history(self):
         queries = []
 

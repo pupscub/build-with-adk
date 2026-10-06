@@ -178,7 +178,9 @@ bun test
 
 Tests cover native OpenTUI rendering, keyboard controls, narrow layouts, paste,
 scrolling, stream state, the real Python subprocess, Exa errors, and ADK history
-after cancelling a tool call. Privacy checks cover names in streamed replies,
+after cancelling a tool call. A Gemini stream regression verifies that tool
+calls followed by empty terminal chunks still produce an answer and preserve
+thought signatures. Privacy checks cover names in streamed replies,
 Markdown, tool arguments, and search results. All automated tests are offline;
 live model quality and API credentials require a manual check. GitHub Actions
 runs the suite on Python 3.10 and 3.13.
