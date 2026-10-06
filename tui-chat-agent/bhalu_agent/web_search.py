@@ -3,7 +3,7 @@
 Exa returns indexed page content where available. Wrapping a search API as a
 function tool lets it compose with the agent's curated profile tools.
 
-Needs EXA_API_KEY in the environment (see .env.example). Without it the tool
+Needs EXA_API_KEY in the environment (see .env.sample). Without it the tool
 degrades gracefully and the agent falls back to its curated snapshots.
 """
 

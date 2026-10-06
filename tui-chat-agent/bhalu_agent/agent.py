@@ -1,11 +1,19 @@
+import os
+from pathlib import Path
+
+from dotenv import load_dotenv
 from google.adk.agents import Agent
 
 from .character_notes import get_bhalu_profile, get_bhalu_lore, get_bhediya_dossier
 from .privacy import protect_model_response
 from .web_search import search_web
 
+# Use the same repo-root configuration in OpenTUI, adk run, and adk web.
+# Preserve process settings here; the ADK CLI also applies its own env loading.
+load_dotenv(Path(__file__).resolve().parents[2] / '.env')
+
 root_agent = Agent(
-    model='gemini-2.5-flash',
+    model=os.getenv('GEMINI_MODEL', '').strip() or 'gemini-3.8-flash',
     name='bhalu_agent',
     description=(
         'Bhalu — an edgy, funny, hopelessly lovestruck bear who chats about '

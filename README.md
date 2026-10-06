@@ -50,7 +50,16 @@ This repository contains sample agents built using the Google ADK (Agentic Devel
    uv sync
    ```
 4. **Configure environment variables:**  
-   Copy `.env.example` to `.env` and fill in the required values (e.g., `GOOGLE_API_KEY`).
+   Copy the template from the repository root (preserves an existing `.env`):
+   ```bash
+   cp -n .env.sample .env
+   ```
+   Open `.env` and set `GOOGLE_API_KEY` to your Gemini API key. Keep
+   `GOOGLE_GENAI_USE_VERTEXAI=FALSE` for API-key authentication. For Bhalu and
+   Bhediya, `GEMINI_MODEL=gemini-3.8-flash` selects the model; `EXA_API_KEY`
+   is optional and enables live web search. Leave it blank for ordinary chat.
+   The existing `.env.example` template also works. Never put credentials in
+   either committed template.
 
 
 ## Running the Agent
